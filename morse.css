@@ -1,0 +1,27 @@
+body{
+    background-color: gray;
+}
+
+textarea{
+    background-color:rgb(53, 53, 53);
+    padding-left: 10px;
+    padding-top: 5px;
+    color:white;
+    width: 97vw;
+    height: 200px;
+    margin-top: 1vh;
+    margin-left: 1vh;
+    border: none;
+}
+pre{
+    background-color:rgb(53, 53, 53);
+    color:white;
+    width: 97vw;
+    height: 200px;
+    padding-left: 10px;
+    padding-top: 5px;
+    margin-top: 1vh;
+    margin-left: 1vh;
+    border: none;
+    margin-right: 0px
+}
