@@ -1,4 +1,13 @@
-const morseText = document.getElementById('morse-code-text');
+var i = 0;
+document.addEventListener('keydown', (event) =>{
+  if(event.key==='Spacebar'||event.key===' '){
+    document.getElementById('letter'+i).classList.add('morse-Outlined');
+    console.log('test');
+    i++;
+  }
+})
+
+/*const morseText = document.getElementById('morse-code-text');
 const morseButton = document.getElementById('morse-input-button');
 const morseMap = new Map();
 var startDate;
@@ -103,4 +112,4 @@ function morseToText(morseCode) {
     }
   } 
   return output;
-}
+}*/
