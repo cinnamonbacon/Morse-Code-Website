@@ -1,12 +1,14 @@
 var startDate;
 var endDate;
+var letterSpaceTimes=[];
+var dotTimes=[];
+var dashTimes=[];
 
 var i = 0;
 document.addEventListener('keydown', (event) =>{
   if(event.key==='Spacebar'||event.key===' '){
     document.getElementById('letter'+i).classList.add('morse-Outlined');
     console.log('test');
-    i++;
     startDate = new Date();
   }
 })
@@ -14,6 +16,14 @@ document.addEventListener('keydown', (event) =>{
 document.addEventListener('keyup', (event) =>{
   if(event.key==='Spacebar'||event.key===' '){
     endDate = new Date();
+    if(document.getElementById('letter'+i).classList.contains("dot")){
+      dotTimes.push(endDate-startDate);
+    }else if(document.getElementById('letter'+i).classList.contains("dash")){
+      dashTimes.push(endDate-startDate);
+    }
+    
+
+    i++;
   }
 })
 
