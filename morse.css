@@ -27,9 +27,12 @@ pre{
 }
 .morse-Outline{
     color:rgb(20, 20, 20);
-    
 }
 .morse-Outlined{
     color:rgb(2, 219, 2);
-    
+}
+
+div{
+    font-size: 50px;
+    text-align: center;
 }
