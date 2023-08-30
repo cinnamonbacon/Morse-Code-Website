@@ -3,32 +3,14 @@ var endDate;
 var letterSpaceTimes=[];
 var dotTimes=[];
 var dashTimes=[];
+var calibrated = false;
+var letterNum = 0;
 
-var i = 0;
-document.addEventListener('keydown', (event) =>{
-  if(event.key==='Spacebar'||event.key===' '){
-    document.getElementById('letter'+i).classList.add('morse-Outlined');
-    console.log('test');
-    startDate = new Date();
-  }
-})
+const letters = document.getElementById('calibrationLetters');
+const LASTLETTER = 9;
 
-document.addEventListener('keyup', (event) =>{
-  if(event.key==='Spacebar'||event.key===' '){
-    endDate = new Date();
-    if(document.getElementById('letter'+i).classList.contains("dot")){
-      dotTimes.push(endDate-startDate);
-    }else if(document.getElementById('letter'+i).classList.contains("dash")){
-      dashTimes.push(endDate-startDate);
-    }
-    
-
-    i++;
-  }
-})
-
-/*const morseText = document.getElementById('morse-code-text');
-const morseButton = document.getElementById('morse-input-button');
+const morseText = document.getElementById('morse-code-text');
+const translatedText = document.getElementById('translated-text');
 const morseMap = new Map();
 
 var currentInterval;
@@ -62,17 +44,71 @@ morseMap.set('--..','z');
 morseMap.set('',' ');
 
 
+
+document.addEventListener('keydown', (event) =>{
+  if(calibrated===false&&(event.key==='Spacebar'||event.key===' ')){
+    document.getElementById('letter'+letterNum).classList.add('morse-Outlined');
+    console.log('test');
+    startDate = new Date();
+  }
+})
+
+document.addEventListener('keyup', (event) =>{
+  if(calibrated===false&&(event.key==='Spacebar'||event.key===' ')){
+    endDate = new Date();
+    if(document.getElementById('letter'+letterNum).classList.contains("dot")){
+      dotTimes.push(endDate-startDate);
+    }else if(document.getElementById('letter'+letterNum).classList.contains("dash")){
+      dashTimes.push(endDate-startDate);
+    }
+    
+
+    letterNum++;
+    if(letterNum>LASTLETTER){
+      calibrate();
+
+    }
+  }
+})
+
+var letterSpaceTime;
+var dotAvgTime;
+var dashAvgTime
+function calibrate(){
+  calibrated = true;
+  dotAvgTime = average(dotTimes);
+  dashAvgTime = average(dashTimes);
+  letters.hidden=true;
+  morseText.hidden = false;
+  translatedText.hidden = false;
+  morseText.value='';
+}
+
+// Calculates and returns the average of an array
+function average(arrayEntry){
+  var total = 0;
+  for(let i=0;i<arrayEntry.length;i++){
+    total+=arrayEntry[i];
+  }
+  return total/arrayEntry.length;
+}
+
+
+
+
+
+
 morseText.addEventListener('input', function handleChange(event) {
     document.getElementById('translated-text').textContent = morseToText(event.target.value);
   });
 
 document.addEventListener('keydown', (event) =>{
-  if(event.key==='Spacebar'||event.key===' '){
+  if(calibrated&&(event.key==='Spacebar'||event.key===' ')){
     timeStart();
   }
 })
 document.addEventListener('keyup', (event) =>{
-  if(event.key==='Spacebar'||event.key===' '){
+  if(calibrated&&(event.key==='Spacebar'||event.key===' ')){
     timeStop();
   }
 })
@@ -131,4 +167,4 @@ function morseToText(morseCode) {
     }
   } 
   return output;
-}*/
+}
