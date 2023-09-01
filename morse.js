@@ -86,11 +86,11 @@ function calibrate(){
 
 // Calculates and returns the average of an array
 function average(arrayEntry){
-  var total = 0;
-  for(let i=0;i<arrayEntry.length;i++){
-    total+=arrayEntry[i];
+  if(arrayEntry.length%2===0){
+    return (arrayEntry[arrayEntry.length-1]+arrayEntry[Math.ceil(arrayEntry.length)+1])/2;
   }
-  return total/arrayEntry.length;
+
+  return arrayEntry[Math.floor(arrayEntry.length-1)];
 }
 
 
@@ -138,7 +138,7 @@ function timeStop(){
 }
 
 function addInput(lengthHeld){
-  if(lengthHeld<300){
+  if(Math.abs(dotAvgTime-lengthHeld)<Math.abs(dashAvgTime-lengthHeld)){
     morseText.value=morseText.value+'.';
   }else{
     morseText.value=morseText.value+'-';
