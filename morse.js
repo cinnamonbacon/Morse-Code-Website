@@ -46,16 +46,17 @@ morseMap.set('',' ');
 
 
 document.addEventListener('keydown', (event) =>{
-  if(calibrated===false&&(event.key==='Spacebar'||event.key===' ')){
+  if(calibrated===false&&(event.key==='Spacebar' || event.key===' ')){
     document.getElementById('letter'+letterNum).classList.add('morse-Outlined');
-    console.log('test');
     startDate = new Date();
   }
-})
+});
 
 document.addEventListener('keyup', (event) =>{
-  if(calibrated===false&&(event.key==='Spacebar'||event.key===' ')){
+  console.log('test0');
+  if(calibrated===false&&(event.key==='Spacebar' || event.key===' ')){
     endDate = new Date();
+    console.log('test');
     if(document.getElementById('letter'+letterNum).classList.contains("dot")){
       dotTimes.push(endDate-startDate);
     }else if(document.getElementById('letter'+letterNum).classList.contains("dash")){
@@ -64,24 +65,30 @@ document.addEventListener('keyup', (event) =>{
     
 
     letterNum++;
+
     if(letterNum>LASTLETTER){
       calibrate();
 
     }
   }
-})
+});
 
 var letterSpaceTime;
 var dotAvgTime;
-var dashAvgTime
+var dashAvgTime;
+
 function calibrate(){
+  letters.hidden=true;
+  console.log("test2");
+  console.log(dotAvgTime);
   calibrated = true;
   dotAvgTime = average(dotTimes);
+  console.log(dotAvgTime);
+  console.log(dashAvgTime);
   dashAvgTime = average(dashTimes);
-  letters.hidden=true;
+  morseText.value='';
   morseText.hidden = false;
   translatedText.hidden = false;
-  morseText.value='';
 }
 
 // Calculates and returns the average of an array
@@ -100,21 +107,21 @@ function average(arrayEntry){
 
 morseText.addEventListener('input', function handleChange(event) {
     document.getElementById('translated-text').textContent = morseToText(event.target.value);
-  });
+});
 
 document.addEventListener('keydown', (event) =>{
   if(calibrated&&(event.key==='Spacebar'||event.key===' ')){
     timeStart();
   }
-})
+});
 document.addEventListener('keyup', (event) =>{
   if(calibrated&&(event.key==='Spacebar'||event.key===' ')){
     timeStop();
   }
-})
+});
 
 
-function timeStart(){
+async function timeStart(){
   // Ends on key repeats
   if(recorded){
     return;
@@ -131,14 +138,16 @@ function timeStart(){
   recorded = true;
 }
 
-function timeStop(){
+async function timeStop(){
   endDate = new Date();
   addInput(endDate-startDate);
   recorded = false;
 }
 
-function addInput(lengthHeld){
-  if(Math.abs(dotAvgTime-lengthHeld)<Math.abs(dashAvgTime-lengthHeld)){
+async function addInput(lengthHeld){
+  console.log(dotAvgTime-lengthHeld);
+  console.log(dashAvgTime-lengthHeld);
+  if(Math.abs(dotAvgTime-lengthHeld) < Math.abs(dashAvgTime-lengthHeld)){
     morseText.value=morseText.value+'.';
   }else{
     morseText.value=morseText.value+'-';
@@ -146,7 +155,7 @@ function addInput(lengthHeld){
   document.getElementById('translated-text').textContent = morseToText(morseText.value);
 }
 
-function addSpace(lengthHeld){
+async function addSpace(lengthHeld){
   if(lengthHeld>2000){
     morseText.value=morseText.value+'  ';
   }else if(lengthHeld>500){
@@ -155,7 +164,7 @@ function addSpace(lengthHeld){
   document.getElementById('translated-text').textContent = morseToText(morseText.value);
 }
 
-function morseToText(morseCode) {
+async function morseToText(morseCode) {
   let output = '';
   const morseArray = morseCode.split(" ");
   for (let i = 0; i < morseArray.length; i++) {
