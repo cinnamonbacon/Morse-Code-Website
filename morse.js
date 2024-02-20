@@ -79,8 +79,7 @@ var dashAvgTime;
 
 function calibrate(){
   console.log(document.getElementById('calibrationLetters'));
-  letters.hidden=true;
-  console.log("test2");
+  console.log(letters);
   console.log(dotAvgTime);
   calibrated = true;
   dotAvgTime = average(dotTimes);
@@ -90,6 +89,7 @@ function calibrate(){
   morseText.value='';
   morseText.hidden = false;
   translatedText.hidden = false;
+  letters.hidden=true;
 }
 
 // Calculates and returns the average of an array
