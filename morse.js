@@ -78,6 +78,7 @@ var dotAvgTime;
 var dashAvgTime;
 
 function calibrate(){
+  console.log(document.getElementById('calibrationLetters'));
   letters.hidden=true;
   console.log("test2");
   console.log(dotAvgTime);
